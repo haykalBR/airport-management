@@ -18,9 +18,9 @@ class ContentTypeListener extends HttpContentTypeException
 
 
     public function onKernelRequest(GetResponseEvent $event)
-    {
-        $request = $event->getRequest();
-
+    {$request = $event->getRequest();
+       $uri=$request->getUri() ;
+        if (strpos($uri, "api/v1") !== false) {
         if ($request->headers->contains('Content-type', self::MIME_TYPE_APPLICATION_JSON)) {
             return true;
         }
@@ -29,6 +29,7 @@ class ContentTypeListener extends HttpContentTypeException
         }
 
             throw new HttpContentTypeException();
+        }
     }
 
 }
